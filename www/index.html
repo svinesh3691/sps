@@ -1,0 +1,612 @@
+
+<html>
+  <head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="j.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+        <link rel="stylesheet" type="text/css" href="b.css" />
+    <style type="text/css">
+      body{
+        background-color:#ECEFED; 
+        font-size: 14px;
+      }
+      header{
+        position: fixed;
+        top:0px;
+        left:0px;
+        width: 100%;
+          height: auto;
+          padding: 4px 0px;
+        /*background-color: #009AB4#10C5DE !important;*/
+        background-color: #10C5DE !important;
+        z-index: 99;
+        border-bottom: 2px solid rgba(7, 139, 162, 0.63);
+          box-shadow: 0 2px 2px -2px rgba(0, 0, 0, .8);
+          text-align: center;
+
+      }
+      .hding
+      {
+        color: #fff;
+          font-size: 2em;
+      }
+      .life_sec
+      {
+        margin-top: 64px;
+        color: #007DFF;
+        font-size: 1.2em;
+      }
+      .point_sec
+      {
+        margin-top: 6px;
+        color: #007DFF;
+        font-size: 1.2em;
+      }
+      .game_sec
+      {
+        margin-top: 0px;
+        padding: 12px;
+      }
+      .one
+      {
+            background-color: #10C5DE;
+            text-align: center;
+            padding: 2px;
+      }
+      .two
+      {
+        background-color: #fff;
+        text-align: center;
+        border: 2px solid #10C5DE;
+        padding: 8px 1px;
+        /*height: 88px;*/
+
+      }
+      .three
+      {
+        background-color: #fff;
+        text-align: center;
+        border: 2px solid #10C5DE;
+        height: 30px;
+
+      }
+      .im{
+        max-width: 100%;
+      }
+      .imk{
+        max-width: 50%;
+      }
+      .c
+      {
+        cursor: pointer;
+      }
+      .l
+      {
+        margin-bottom: 12px;
+            color: darkgoldenrod;
+          font-size: 1.3em;
+          font-weight: bold;
+      }
+      footer
+      {
+        position: fixed;
+        bottom: 0;
+        width:100%;
+      }
+      .sel_sec
+      {
+        padding: 0px 15px;
+      }
+
+      .str
+      {
+        width:25px;
+        height:25px;
+      }
+      /*sssssssssssss*/
+
+      @media(max-width: 370px)
+      {
+        .hding {
+            color: #fff;
+            font-size: 1.46em;
+        }
+      }
+      /**/
+
+    .overlay
+    {
+      width: 100%;
+      position: fixed;
+      top: 0; 
+      left: 0;  
+      width: 100%;
+        display: table-cell;
+        height: 100%;
+        background-color: #F5F5F5;
+        opacity: .9;
+        text-align: center;
+        vertical-align: middle; 
+        display: none;
+        z-index: 9999;  
+    }
+
+    .overlays
+    {
+      width: 100%;
+      position: fixed;  
+      width: 100%;
+        display: table-cell;
+        height: 100%;
+        background-color: #F5F5F5;
+        opacity: .92;
+        text-align: center;
+        vertical-align: middle; 
+        z-index: 9999;  
+        display: none;  
+    }
+
+
+    .overlay p
+    {    vertical-align: middle;
+        margin-top: 28%;
+        font-size: 2em;
+        color: cornsilk;
+        font-weight: bold;
+
+    }
+
+    .overlays p
+    {
+          vertical-align: middle;
+          margin-top: 28%;
+          font-size: 2em;
+          color: cornsilk;
+          font-weight: bold;
+    }
+    button
+    {
+      color: aliceblue;
+        background-color: orange;
+        border: 0;
+        border-radius: 12px;
+        padding: 9px 26px;
+        font-size: 1.6em;
+    }
+    </style>
+  </head>
+  <body>
+    <header>
+      <span class="hding">Stone-Paper-Scissors&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    </header>
+
+
+
+    <!-- Alert SEction -->
+
+        <div class="overlay">
+          <p></p> 
+        </div>
+        <div class="overlays">
+          <p></p>
+          <button class="newgame">Play Again</button> 
+        </div>
+
+
+
+    <!-- Alert Secion -->
+    <div class="container">
+      <div class="row life_sec">
+        <div class="col-xs-12">
+          <span class="pull-left">
+            ROBO Remaining Life: 
+            <input type="hidden" class="form" id="rl" value="5" >
+          </span>
+          <span class="pull-right" id="st_r">
+            <img class="str" src="a.png"><img class="str" src="a.png"><img class="str" src="a.png"><img class="str" src="a.png"><img class="str" src="a.png">
+             
+          </span>
+        
+        </div>
+        <div class="col-xs-12">
+          <span class="pull-left">
+            YOUR Remaining Life: 
+            <input  class="form" type="hidden" id="yl" value="5"> 
+          </span>
+          <span class="pull-right" id="st_y">
+            <img class="str" src="a.png"><img class="str" src="a.png"><img class="str" src="a.png"><img class="str" src="a.png"><img class="str" src="a.png">
+          </span> 
+        </div>
+      </div><!-- row -->
+
+
+      <div class="row point_sec">
+        <div class="col-xs-12">
+          <span class="pull-left">
+            ROBO's Point: 
+            <input class="form" type="hidden" id="rp" value="0">
+          </span>
+          <span class="pull-right" id="por">
+             0
+          </span>
+        
+        </div>
+        <div class="col-xs-12">
+          <span class="pull-left">
+            YOUR's Point: 
+            <input  class="form"  type="hidden" id="yp" value="0">
+          </span>
+          <span class="pull-right" id="poy">
+             0
+          </span> 
+        </div>
+      </div><!-- row -->
+
+      
+      <div class="row game_sec">
+        
+
+
+        <div class="col-xs-12 one">
+          <div class="col-xs-6 col-sm-6 two">
+            <input type="hidden" id="r" value="0">
+            <span class="col-xs-12 l">Robo's Selection</span>
+            <span id="robo">
+              Robo is waiting...<br>
+              Start the game now
+              <br>
+              Come on!
+            </span> 
+            
+          </div>
+          <div class="col-xs-6 col-sm-6 two">
+            <input type="hidden" id="p" value="0">
+            <span class="col-xs-12 l">Your's Selection</span>
+            <span id="play">Start the game by selecting <br> stone / paper / scissors</span>          
+            
+          </div>
+        </div>
+      </div>
+
+      
+      
+
+
+
+
+
+
+
+
+
+    </div><!-- Container -->
+
+
+    <footer>
+      <div class="row sel_sec">
+        <div class="col-xs-12 one">
+          <div id="play_r" class="col-xs-4 two c play">
+            <img class="imk" src="r.png">
+          </div>
+          <div id="play_p" class="col-xs-4 two c play">
+            <img class="imk" src="p.jpg">
+          </div>
+          <div id="play_s" class="col-xs-4 two c play">
+            <img class="imk" src="s.png">
+          </div>
+
+        </div>
+      </div>
+    </footer>
+
+    <script src="b.js"></script>
+
+
+
+    <script type="text/javascript">
+
+    $(document).ready(function(){
+
+      // alert('Welcome to RPS');
+      rc = 0;
+      yc = 0;
+      
+      $('.play').click(function(){
+
+        var ids = $(this).attr('id');
+        switch(ids)
+        {
+          case 'play_r':
+            $('#play').html('<img class="im" src="r.png">');
+            $('#p').val(1);
+            pp = 1;
+            break;
+          case 'play_p':
+            $('#play').html('<img class="im" src="p.jpg">');
+            $('#p').val(2);
+            pp = 2;
+            break;
+          case 'play_s':
+            $('#play').html('<img class="im" src="s.png">');
+            $('#p').val(3);
+            pp = 3;
+            break;
+        }
+        var ran = Math.floor(Math.random() * 3) + 1; 
+        switch(ran)
+        {
+          case 1:
+            $('#robo').html('<img class="im" src="r.png">');
+            $('#r').val(1);
+            rr = 1;
+            break;
+          case 2:
+            $('#robo').html('<img class="im" src="p.jpg">');
+            $('#r').val(2);
+            rr = 2;
+            break;
+          case 3:
+            $('#robo').html('<img class="im" src="s.png">');
+            $('#r').val(3);
+            var rr = 3;
+            break;
+        }
+
+        setTimeout(function(){
+          if((pp==1)&&(rr==1))
+          {
+            // alert('Oops! Both selected the same stuff');
+            tempAlert("Oops! Both selected the same stuff",500,'#E3C400');
+          }
+          if((pp==1)&&(rr==2))
+          {
+            yc++;
+            rc=0;
+            v = $('#rp').val();
+            x = parseInt(v)+1;
+            $('#rp').val(x);
+            $('#por').html(x);
+            if(yc == 3)
+            {
+              yc=0;
+              v = $('#yl').val();
+              x = parseInt(v)-1;
+              $('#yl').val(x);
+              $('#st_y .str:last').remove();
+              tempAlert("Sorry! Robo Wins and you lost a life",1000,'#E80B0B');
+              setTimeout(function(){gmchk();},1001);
+
+            }else tempAlert("Sorry! Robo Wins",500,'#E80B0B');
+
+          }
+          if((pp==1)&&(rr==3))
+          {
+            yc=0;
+            rc++;
+            v = $('#yp').val();
+            x = parseInt(v)+1;
+            $('#yp').val(x);
+            $('#poy').html(x);
+            if(rc==3)
+            {
+              rc=0;
+              v = $('#rl').val();
+              x = parseInt(v)-1;
+              $('#rl').val(x);
+              $('#st_r .str:last').remove();
+              tempAlert("Wow! You Won and robo lost a life",1000,'#0EC04A');
+              setTimeout(function(){gmchk();},1001);
+
+            }
+            else tempAlert("Wow! You Won",500,'#0EC04A');
+          }
+
+          if((pp==2)&&(rr==1))
+          {
+            yc=0;
+            rc++;
+            v = $('#yp').val();
+            x = parseInt(v)+1;
+            $('#yp').val(x);
+            $('#poy').html(x);
+            if(rc==3)
+            {
+              rc=0;
+              v = $('#rl').val();
+              x = parseInt(v)-1;
+              $('#rl').val(x);
+              $('#st_r .str:last').remove();
+              tempAlert("Wow! You Won and robo lost a life",1000,'#0EC04A');
+              setTimeout(function(){gmchk();},1001);
+
+            }
+            else tempAlert("Wow! You Won",500,'#0EC04A');
+          }
+          if((pp==2)&&(rr==2))
+          {
+            // alert('Oops! Both selected the same stuff');
+            tempAlert("Oops! Both selected the same stuff",500,'#E3C400');
+          }
+          if((pp==2)&&(rr==3))
+          {
+            yc++;
+            rc=0;
+            v = $('#rp').val();
+            x = parseInt(v)+1;
+            $('#rp').val(x);
+            $('#por').html(x);
+            if(yc == 3)
+            {
+              yc=0;
+              v = $('#yl').val();
+              x = parseInt(v)-1;
+              $('#yl').val(x);
+              $('#st_y .str:last').remove();
+              tempAlert("Sorry! Robo Wins and you lost a life",1000,'#E80B0B');
+              setTimeout(function(){gmchk();},1001);
+
+            }else tempAlert("Sorry! Robo Wins",500,'#E80B0B');
+
+          }
+
+
+          if((pp==3)&&(rr==1))
+          {
+            yc++;
+            rc=0;
+            v = $('#rp').val();
+            x = parseInt(v)+1;
+            $('#rp').val(x);
+            $('#por').html(x);
+            if(yc == 3)
+            {
+              yc=0;
+              v = $('#yl').val();
+              x = parseInt(v)-1;
+              $('#yl').val(x);  
+              $('#st_y .str:last').remove();
+              tempAlert("Sorry! Robo Wins and you lost a life",1000,'#E80B0B');
+              setTimeout(function(){gmchk();},1001);
+
+            }else tempAlert("Sorry! Robo Wins",500,'#E80B0B');
+
+          }
+          if((pp==3)&&(rr==2))
+          {
+            
+            yc=0;
+            rc++;
+            v = $('#yp').val();
+            x = parseInt(v)+1;
+            $('#yp').val(x);
+            $('#poy').html(x);
+            if(rc==3)
+            {
+              rc=0;
+              v = $('#rl').val();
+              x = parseInt(v)-1;
+              $('#rl').val(x);
+              $('#st_r .str:last').remove();
+              tempAlert("Wow! You Won and robo lost a life",1000,'#0EC04A');
+              setTimeout(function(){gmchk();},1001);
+
+            }
+            else tempAlert("Wow! You Won",500,'#0EC04A');
+
+
+          }
+          if((pp==3)&&(rr==3))
+          {
+            // alert('Oops! Both selected the same stuff');
+            tempAlert("Oops! Both selected the same stuff",500,'#E3C400');
+          }
+
+
+
+
+          
+
+
+
+        },200);
+
+
+      });
+  
+
+
+    });
+
+    
+    $('.newgame').click(function(){
+
+          $('#rl').val('5');
+          $('#yl').val('5');
+          $('#robo').html('');
+          $('#play').html('');
+          $('#r').val('0');
+          $('#p').val('0');
+          $('#rp').val('0');
+          $('#por').html('0');
+          $('#yp').val('0');
+          $('#poy').html('0');
+          $('#st_r').html('<img class="str" src="a.png"><img class="str" src="a.png"><img class="str" src="a.png"><img class="str" src="a.png"><img class="str" src="a.png">');
+          $('#st_y').html('<img class="str" src="a.png"><img class="str" src="a.png"><img class="str" src="a.png"><img class="str" src="a.png"><img class="str" src="a.png">');
+          $('.overlays').hide();
+
+    });
+
+
+
+    /*Alert Function*/
+
+    function tempAlert(msg,duration,color)
+    {
+        
+
+         $('.overlay').css('background-color',color);
+         $('.overlay').show();
+         $('.overlay p').html(msg);
+         setTimeout(function(){
+          $('.overlay').hide();
+          $('.overlay p').html('');
+         },700);
+
+    }
+
+
+
+    function sucAlert(msg,color)
+    {
+         
+         $('.overlays').css('background-color',color);
+         $('.overlays').show();
+         $('.overlays p').html(msg);
+         
+
+    }
+
+
+    function gmchk()
+    {
+          rl = $('#rl').val();
+          yl = $('#yl').val();
+
+          rp = $('#rp').val();
+          yp = $('#yp').val();
+
+
+
+          if(rl==0)
+          {
+            if(rp<yp)
+            { //Me high
+              sucAlert("Wow! You Won The game with high points. <br> Your Points is "+yp+" <br> Robo's point is "+rp,'#0EC04A');
+            }else
+            {
+              sucAlert("Wow! You actually Won The game but your points are less than Robo's Point. <br> So the match is draw",'#0EC04A');
+            }
+          }
+
+          if(yl==0)
+          {
+            if(rp<yp)
+            {
+              sucAlert("Game Over ! You Lost all your life but your point is higher than Robo's Point, So the match is draw ",'#E80B0B');
+            }
+            else
+            {
+              sucAlert("Game Over! You lost all your life with low points. <br> Your Points is "+yp+" <br> Robo's point is "+rp,'#E80B0B');
+            }
+            
+          }
+    }
+
+
+    </script>
+
+
+
+  </body>
+</html>
